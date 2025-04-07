@@ -30,8 +30,15 @@ app.get("/registr", (req, res) => {
     res.render('registr');
 });
 
-app.post("/login", (req, res) => {
+app.post("/registr", (req, res) => {
     const { username, name, password } = req.body;
+
+    // Check if the username already exists
+    const userExists = users.some(u => u.username === username);
+    if (userExists) {
+        return res.render('registr', { error: 'Username already exists.' });
+    }
+
     // Add the new user to the dummy database
     users.push({ username, password, name });
     res.redirect('/login');
