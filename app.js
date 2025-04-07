@@ -14,7 +14,7 @@ app.use(session({ secret: 'supersecret', resave: false, saveUninitialized: true 
 
 // Dummy users database
 const users = [
-    { username: 'amin', password: 'amin123', name: 'amin' },
+    { username: 'nouredine', password: '2024-2025', name: 'Amraoui' },
     { username: 'mohamed', password: 'qwerty', name: 'mohamed' }
 ];
 
