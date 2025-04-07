@@ -26,6 +26,17 @@ app.get("/home", (req, res) => {
     res.render('home');
 });
 
+app.get("/registr", (req, res) => {
+    res.render('registr');
+});
+
+app.post("/login", (req, res) => {
+    const { username, name, password } = req.body;
+    // Add the new user to the dummy database
+    users.push({ username, password, name });
+    res.redirect('/login');
+});
+
 app.get("/login", (req, res) => {
     res.render('login');
 });
@@ -59,6 +70,7 @@ app.post("/verify", (req, res) => {
     // Dummy verification code check
     if (code === '123456') {
         // If verification successful, redirect to account page
+        // req.session.verified = true; 
         res.redirect('/account');
     } else {
         res.render('verify', { error: 'Invalid verification code.' });
@@ -66,6 +78,10 @@ app.post("/verify", (req, res) => {
 });
 
 app.get("/account", (req, res) => {
+   // if (!req.session.user || !req.session.verified) {
+   //     return res.redirect('/login');
+   //  }
+
     const username = req.session.user?.username || 'Guest';
     const name = req.session.user?.name || 'Guest User';
     res.render('account', { username, name });
