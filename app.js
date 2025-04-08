@@ -12,7 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: 'supersecret', resave: false, saveUninitialized: true }));
 
 
-// Dummy users database
 const users = [
     { username: 'nouredine', password: '2024-2025', name: 'Amraoui' },
     { username: 'mohamed', password: 'qwerty', name: 'mohamed' }
@@ -33,13 +32,13 @@ app.get("/registr", (req, res) => {
 app.post("/registr", (req, res) => {
     const { username, name, password } = req.body;
 
-    // Check if the username already exists
+
     const userExists = users.some(u => u.username === username);
     if (userExists) {
         return res.render('registr', { error: 'Username already exists.' });
     }
 
-    // Add the new user to the dummy database
+
     users.push({ username, password, name });
     res.redirect('/login');
 });
@@ -51,16 +50,16 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
     
-    // Find user in the dummy database
+
     const user = users.find(u => u.username === username && u.password === password);
     
     if (user) {
-        // Store user in session
+
         req.session.user = { 
             username: user.username,
             name: user.name 
         };
-        // Redirect to verify page
+
         res.redirect('/verify');
     } else {
         res.render('login', { error: 'Invalid username or password' });
@@ -74,9 +73,7 @@ app.get("/verify", (req, res) => {
 app.post("/verify", (req, res) => {
     const { code } = req.body;
     
-    // Dummy verification code check
     if (code === '123456') {
-        // If verification successful, redirect to account page
         // req.session.verified = true; 
         res.redirect('/account');
     } else {
